@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import APIHelper from '../utils/apihelper'
+import APIHelper from '../utils/api-helper'
 import * as actions from '../actions'
+import Post from '../components/post'
 
 class PostsPage extends Component {
   constructor(props) {
     super(props);
-    this.getPosts();
+    this.fetchPosts();
   }
 
-  getPosts() {
-    APIHelper.getPosts().then(posts => {
+  fetchPosts() {
+    APIHelper.fetchPosts().then(posts => {
       this.props.setPosts({
         type: actions.SET_POSTS,
         posts
@@ -23,10 +24,9 @@ class PostsPage extends Component {
     var posts = this.props.posts || [];
     return (
       <div>
-        <h1>Posts</h1>
-        <ul>
-          {posts.map((p) => (<li key={p.id}>{p.title}</li>))}
-        </ul>
+        <ol>
+          {posts.map((p) => (<Post key={p.id} post={p} />))}
+        </ol>
       </div>
     )
   }
@@ -36,13 +36,13 @@ class PostsPage extends Component {
 
 function mapStateToProps ({ posts }) {
   return {
-    posts
+    posts,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    setPosts: (posts) => dispatch(actions.setPosts(posts))
+    setPosts: (posts) => dispatch(actions.setPosts(posts)),
   }
 }
 

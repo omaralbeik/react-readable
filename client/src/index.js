@@ -5,9 +5,10 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter } from 'react-router-dom';
 
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
-
+import { createStore, combineReducers } from 'redux'
 import * as reducers from './reducers'
+
+// import { applyMiddleware, compose } from 'redux'
 
 // const logger = store => next => action => {
 //   console.group(action.type)

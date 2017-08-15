@@ -1,0 +1,20 @@
+ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+.score-label {
+  cursor: auto;
+  border: 1px solid #ccc;
+  font-weight: bold;
+  text-align: center;
+}
+
+.score-label:active,
+.score-label:focus,
+.score-label.active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}

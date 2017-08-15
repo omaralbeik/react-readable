@@ -6,10 +6,12 @@ import './App.css';
 import {Provider} from 'react-redux'
 
 import {Route} from 'react-router-dom'
-import NavigationBar from './components/NavigationBar'
+import NavigationBar from './components/navigation-bar'
 
-import PostsPage from './pages/PostsPage'
-import HomePage from './pages/HomePage'
+
+import HomePage from './pages/home-page'
+import PostsPage from './pages/posts-page'
+import CategoriesPage from './pages/categories-page'
 
 class App extends Component {
   static propTypes = {
@@ -25,7 +27,7 @@ class App extends Component {
           <div className='container'>
             <Route exact path='/' component={HomePage}/>
             <Route exact path='/posts' component={PostsPage}/>
-            <Route exact path='/categories' component={HomePage}/>
+            <Route exact path='/categories' component={CategoriesPage}/>
             <Route exact path='/comments' component={HomePage}/>
           </div>
         </div>

@@ -7,45 +7,58 @@ class APIHelper {
   /**
    ** Get all categories.
    */
-  static getCategories() {
+  static fetchCategories() {
     return this._getObject(this._CATEGORIES_URL, "categories");
   }
 
   /**
    ** Get all posts for a category.
    */
-  static getCategoryPosts(category_name) {
+  static fetchCategoryPosts(category_name) {
     return this._getObject(this._CATEGORY_POSTS_URL(category_name));
   }
 
   /**
    ** Get all posts.
    */
-  static getPosts() {
+  static fetchPosts() {
     return this._getObject(this._POSTS_URL);
   }
 
   /**
    ** Get a post.
    */
-  static getPost(post_id) {
+  static fetchPost(post_id) {
     return this._getObject(this._POST_URL(post_id));
+  }
+
+  /**
+   ** Upvote a post.
+   */
+  static upvotePost(post_id) {
+    return this._postObject(this._POST_URL(post_id), {'option': 'upVote'});
+  }
+
+  /**
+   ** Downvote a post.
+   */
+  static downvotePost(post_id) {
+    return this._postObject(this._POST_URL(post_id), {'option': 'downVote'});
   }
 
   /**
    ** Get all comments for a post.
    */
-  static getPostComments(post_id) {
+  static fetchPostComments(post_id) {
     return this._getObject(this._POST_COMMENTS_URL(post_id));
   }
 
   /**
    ** Get a comment
    */
-  static getComment(comment_id) {
+  static fetchComment(comment_id) {
     return this._getObject(this._COMMENT_URL(comment_id));
   }
-
 
   /****************************************************************************/
   /*                                   URLs                                   */
@@ -88,13 +101,12 @@ class APIHelper {
     return `${this._COMMENTS_URL}${comment_id}/`
   }
 
-
   /****************************************************************************/
   /*                                 Helpers                                  */
   /****************************************************************************/
 
   /**
-   ** Generic private helper function to fetch a json object from server.
+   ** Generic private helper function to get a json object from server.
    */
   static _getObject(url, keyPath = null) {
     return new Promise((resolve, reject) => {
@@ -105,6 +117,34 @@ class APIHelper {
       var init = {
         method: 'GET',
         headers: headers
+      };
+
+      fetch(url, init).then((response) => {
+        return response.json();
+      }).then((data) => {
+        if (keyPath) {
+          resolve(data[keyPath]);
+        } else {
+          resolve(data);
+        }
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  }
+
+  /**
+  ** Generic private helper function to post a json object from server.
+   */
+  static _postObject(url, body, keyPath = null) {
+    return new Promise((resolve, reject) => {
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', this._AUTH_KEY);
+      var init = {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({option: "upVote"})
       };
 
       fetch(url, init).then((response) => {
