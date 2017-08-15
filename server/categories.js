@@ -16,6 +16,22 @@ const defaultData = {
       {
         name: 'udacity',
         path: 'udacity'
+      },
+      {
+        name: 'iOS',
+        path: 'ios'
+      },
+      {
+        name: 'coffee',
+        path: 'coffee'
+      },
+      {
+        name: 'open-source',
+        path: 'opensource'
+      },
+      {
+        name: 'swift',
+        path: 'swift'
       }
   ]
 }
@@ -32,7 +48,7 @@ function getData (token) {
 
 function getAll (token) {
   return new Promise((res) => {
-    res(getData(token))    
+    res(getData(token))
   })
 }
 

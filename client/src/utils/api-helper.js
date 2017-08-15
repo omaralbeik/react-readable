@@ -144,7 +144,7 @@ class APIHelper {
       var init = {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify({option: "upVote"})
+        body: JSON.stringify(body)
       };
 
       fetch(url, init).then((response) => {

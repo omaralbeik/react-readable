@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 
+import {Link} from 'react-router-dom'
+
 import APIHelper from '../utils/api-helper'
 import PropTypes from 'prop-types';
 import {ButtonGroup, Button, Glyphicon} from 'react-bootstrap'
@@ -38,8 +40,8 @@ class Post extends Component {
     const date = timeago().format(post.timestamp);
     return (
       <li>
-        <h1>{post.title}</h1>
-        <p>{date} | by {post.author} | in <a href="#">{post.category}</a></p>
+        <Link to={`/${post.category}/${post.id}`} ><h1>{post.title}</h1></Link>
+        <p>{date} | by {post.author} | in <Link to={`/${post.category}`}>{post.category}</Link></p>
         <p>{post.body}</p>
         <ButtonGroup bsSize="xsmall">
           <Button><Glyphicon glyph="triangle-bottom" onClick={() => {this.downvotePost()}}/></Button>
