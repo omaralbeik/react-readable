@@ -8,7 +8,7 @@ class APIHelper {
    ** Get all categories.
    */
   static fetchCategories() {
-    return this._getObject(this._CATEGORIES_URL, "categories");
+    return this._getObject(this._CATEGORIES_URL, 'categories');
   }
 
   /**

@@ -1,49 +1,23 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
-import APIHelper from '../utils/api-helper'
-import * as actions from '../actions'
+import Category from '../components/category'
 
 class CategoriesPage extends Component {
-  constructor(props) {
-    super(props);
-    this.fetchCategories();
-  }
-
-  fetchCategories() {
-    APIHelper.fetchCategories().then(categories => {
-      this.props.setCategories({
-        type: actions.SET_CATEGORIES,
-        categories
-      });
-    });
+  static propTypes = {
+    categories: PropTypes.array.isRequired
   }
 
   render() {
-    var categories = this.props.categories || [];
+    var {categories} = this.props;
     return (
       <div>
-        <h1>Ctegories</h1>
         <ol>
-          {categories.map((c) => (<li key={c.name}>{c.name}</li>))}
+          {categories.map((c) => (<Category key={c.path} category={c}/>))}
         </ol>
       </div>
     )
   }
-
 }
 
-
-function mapStateToProps ({ categories }) {
-  return {
-    categories
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    setCategories: (categories) => dispatch(actions.setCategories(categories))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesPage);
+export default CategoriesPage

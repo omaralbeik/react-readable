@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux'
-import * as actions from '../actions'
-
-import {Link} from 'react-router-dom'
-
-import APIHelper from '../utils/api-helper'
 import PropTypes from 'prop-types';
-import {ButtonGroup, Button, Glyphicon} from 'react-bootstrap'
-import timeago from 'timeago.js';
+
+import {Link} from 'react-router-dom';
+
+import {connect} from 'react-redux';
+import * as actions from '../actions';
+
+import APIHelper from '../utils/api-helper';
+import {ButtonGroup, Button, Glyphicon} from 'react-bootstrap';
+import timeago from 'timeago.js';;
 
 class Post extends Component {
   static propTypes = {
@@ -40,7 +41,7 @@ class Post extends Component {
     const date = timeago().format(post.timestamp);
     return (
       <li>
-        <Link to={`/${post.category}/${post.id}`} ><h1>{post.title}</h1></Link>
+        <Link to={`/posts/${post.id}`} ><h1>{post.title}</h1></Link>
         <p>{date} | by {post.author} | in <Link to={`/${post.category}`}>{post.category}</Link></p>
         <p>{post.body}</p>
         <ButtonGroup bsSize="xsmall">

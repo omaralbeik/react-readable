@@ -1,40 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { BrowserRouter } from 'react-router-dom';
 
-import { createStore, combineReducers } from 'redux'
-import * as reducers from './reducers'
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
+import rootReducer from './reducers'
 
-// import { applyMiddleware, compose } from 'redux'
+import {BrowserRouter} from 'react-router-dom';
 
-// const logger = store => next => action => {
-//   console.group(action.type)
-//   console.info('dispatching', action)
-//   let result = next(action)
-//   console.log('next state', store.getState())
-//   console.groupEnd(action.type)
-//   return result
-// }
+const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-
-const Reducers = combineReducers({
-  ...reducers,
-});
-
-const store = createStore(
-  Reducers,
-  composeEnhancers(),
-  // composeEnhancers(applyMiddleware(logger))
-)
+const store = createStore(rootReducer, reduxDevTools)
 
 ReactDOM.render(
-  <BrowserRouter><App store={store}/></BrowserRouter>,
-  document.getElementById('root')
-);
+  <Provider store={store}>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
+  </Provider>, document.getElementById('root'));
 
 registerServiceWorker();

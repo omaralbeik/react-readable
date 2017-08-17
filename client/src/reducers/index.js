@@ -1,15 +1,15 @@
+import { combineReducers } from 'redux'
+
 import {
-  SET_POSTS,
+  LOAD_POSTS,
   UPVOTE_POST,
   DOWNVOTE_POST,
-  SET_CATEGORIES
-} from '../actions'
+  LOAD_CATEGORIES} from '../actions'
 
-export function posts(state = [], action) {
-
+function posts(state = [], action) {
   switch (action.type) {
-    case SET_POSTS:
-      return action.posts
+    case LOAD_POSTS:
+      return action.posts;
     case UPVOTE_POST:
       return state.map((p) => {
         if (p.id === action.post_id) {
@@ -27,16 +27,15 @@ export function posts(state = [], action) {
     default:
       return state;
   }
-
 }
 
-export function categories(state = [], action) {
-
+function categories(state = [], action) {
   switch (action.type) {
-    case SET_CATEGORIES:
+    case LOAD_CATEGORIES:
       return action.categories;
     default:
       return state;
   }
-
 }
+
+export default combineReducers({posts, categories});

@@ -1,39 +1,66 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
-import {Provider} from 'react-redux'
+import {Route, withRouter} from 'react-router-dom'
 
-import {Route} from 'react-router-dom'
 import NavigationBar from './components/navigation-bar'
-
-
 import HomePage from './pages/home-page'
 import PostsPage from './pages/posts-page'
+import PostDetailsPage from './pages/post-details-page'
 import CategoriesPage from './pages/categories-page'
 
+import {connect} from 'react-redux'
+
+import APIHelper from './utils/api-helper'
+import * as actions from './actions'
+
 class App extends Component {
-  static propTypes = {
-    store: PropTypes.object.isRequired,
+  constructor(props) {
+    super(props);
+    this.fetchPosts();
+    this.fetchCategories();
+  }
+
+  fetchPosts() {
+    APIHelper.fetchPosts().then(posts => {
+      this.props.loadPosts({type: actions.LOAD_POSTS, posts});
+    });
+  }
+
+  fetchCategories() {
+    APIHelper.fetchCategories().then(categories => {
+      this.props.loadCategories({type: actions.LOAD_CATEGORIES, categories});
+    });
   }
 
   render() {
-    const {store} = this.props;
+    const {posts, categories} = this.props
     return (
-      <Provider store={store}>
-        <div className="App">
-          <NavigationBar/>
-          <div className='container'>
-            <Route exact path='/' component={HomePage}/>
-            <Route exact path='/posts' component={PostsPage}/>
-            <Route exact path='/categories' component={CategoriesPage}/>
-            <Route exact path='/comments' component={HomePage}/>
-          </div>
+      <div className="App">
+        <NavigationBar/>
+        <div className='container'>
+          <Route exact path='/' component={HomePage}/>
+          <Route exact path='/posts' render={() => (<PostsPage posts={posts}/>)}/>
+          <Route exact path='/posts/:id' component={PostDetailsPage}/>
+          <Route exact path='/categories' render={() => (<CategoriesPage categories={categories}/>)}/>
+          <Route exact path='/comments' component={HomePage}/>
         </div>
-      </Provider>
+      </div>
     );
   }
 }
 
-export default App
+function mapStateToProps({posts, categories}) {
+  return {posts, categories}
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    loadPosts: (posts) => dispatch(actions.loadPosts(posts)),
+    loadCategories: (categories) => dispatch(actions.loadCategories(categories)),
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
