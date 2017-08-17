@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {arrayFromObject} from '../utils/helpers';
 import Category from '../components/category'
 
 class CategoriesPage extends Component {
   static propTypes = {
-    categories: PropTypes.array.isRequired
+    categories: PropTypes.object.isRequired
   }
 
   render() {
-    var {categories} = this.props;
+    const {categories} = this.props;
+    const categoriesArray = arrayFromObject(categories, 'id');
     return (
       <div>
         <ol>
-          {categories.map((c) => (<Category key={c.path} category={c}/>))}
+          {categoriesArray.map((c) => (<Category key={c.path} category={c}/>))}
         </ol>
       </div>
     )
