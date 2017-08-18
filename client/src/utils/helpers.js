@@ -1,8 +1,13 @@
 export function objectFromArray(arr, key='id') {
-  return arr.reduce((v, i) => {
-    v[i[key]] = i;
-    return v;
-  }, {});
+  if (arr && arr.length) {
+    return arr.reduce((v, i) => {
+      v[i[key]] = i;
+      return v;
+    }, {});
+  } else {
+    return {};
+  }
+
 }
 
 export function arrayFromObject(obj, key='id') {

@@ -18,3 +18,7 @@ ol {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
+
+.editButtons {
+  margin-left: 10px;
+}

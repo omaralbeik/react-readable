@@ -47,6 +47,13 @@ class APIHelper {
   }
 
   /**
+   ** Delete a post.
+   */
+  static deletePost(post_id) {
+    return this._deleteObject(this._POST_URL(post_id));
+  }
+
+  /**
    ** Get all comments for a post.
    */
   static fetchPostComments(post_id) {
@@ -72,6 +79,13 @@ class APIHelper {
    */
   static downvoteComment(comment_id) {
     return this._postObject(this._COMMENT_URL(comment_id), {'option': 'downVote'});
+  }
+
+  /**
+   ** Delete a comment.
+   */
+  static deleteComment(comment_id) {
+    return this._deleteObject(this._COMMENT_URL(comment_id));
   }
 
   /****************************************************************************/
@@ -119,22 +133,27 @@ class APIHelper {
   /*                                 Helpers                                  */
   /****************************************************************************/
 
+
   /**
-   ** Generic private helper function to get a json object from server.
-   */
-  static _getObject(url, keyPath = null) {
+  ** Generic private helper function to form a server request.
+  */
+  static _makeRequest(url, method, body=null, keyPath = null) {
     return new Promise((resolve, reject) => {
       var headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('Authorization', this._AUTH_KEY);
-
       var init = {
-        method: 'GET',
+        method: method,
         headers: headers
       };
+      if (body) {
+        init.body = JSON.stringify(body)
+      }
 
       fetch(url, init).then((response) => {
-        return response.json();
+        return response.text().then(text => {
+          return text ? JSON.parse(text) : {}
+        });
       }).then((data) => {
         if (keyPath) {
           resolve(data[keyPath]);
@@ -148,31 +167,24 @@ class APIHelper {
   }
 
   /**
+   ** Generic private helper function to get a json object from server.
+   */
+  static _getObject(url, keyPath = null) {
+    return this._makeRequest(url, 'GET', null, keyPath: keyPath);
+  }
+
+  /**
   ** Generic private helper function to post a json object from server.
    */
   static _postObject(url, body, keyPath = null) {
-    return new Promise((resolve, reject) => {
-      var headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('Authorization', this._AUTH_KEY);
-      var init = {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(body)
-      };
+    return this._makeRequest(url, 'POST', body, keyPath: keyPath);
+  }
 
-      fetch(url, init).then((response) => {
-        return response.json();
-      }).then((data) => {
-        if (keyPath) {
-          resolve(data[keyPath]);
-        } else {
-          resolve(data);
-        }
-      }).catch((error) => {
-        reject(error);
-      });
-    });
+  /**
+   ** Generic private helper function to delete an object from server.
+   */
+  static _deleteObject(url, keyPath = null) {
+    return this._makeRequest(url, 'DELETE', null, keyPath: keyPath);
   }
 
 }

@@ -1,12 +1,15 @@
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const UPVOTE_POST = 'UPVOTE_POST'
 export const DOWNVOTE_POST = 'DOWNVOTE_POST'
+export const DELETE_POST = 'DELETE_POST'
 
 export const LOAD_COMMENTS = 'LOAD_POST_COMMENTS'
 export const UPVOTE_COMMENT = 'UPVOTE_COMMENT'
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 
 export function loadPosts({posts}) {
   return {type: LOAD_POSTS, posts};
@@ -18,6 +21,10 @@ export function upvotePost({post_id}) {
 
 export function downvotePost({post_id}) {
   return {type: DOWNVOTE_POST, post_id};
+}
+
+export function deletePost({post_id}) {
+  return {type: DELETE_POST, post_id};
 }
 
 
@@ -33,7 +40,15 @@ export function downvoteComment({comment_id}) {
   return {type: DOWNVOTE_COMMENT, comment_id};
 }
 
+export function deleteComment({comment_id}) {
+  return {type: DELETE_COMMENT, comment_id};
+}
+
 
 export function loadCategories({categories}) {
   return {type: LOAD_CATEGORIES, categories};
+}
+
+export function deleteCategory({category_name}) {
+  return {type: DELETE_CATEGORY, category_name};
 }

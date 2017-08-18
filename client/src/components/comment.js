@@ -6,8 +6,10 @@ import {connect} from 'react-redux';
 import * as actions from '../actions';
 
 import APIHelper from '../utils/api-helper';
-import {ButtonGroup, Button, Glyphicon} from 'react-bootstrap';
 import timeago from 'timeago.js';
+
+import Score from './score'
+import EditButtons from './edit-buttons'
 
 class Comment extends Component {
   static propTypes = {
@@ -34,6 +36,17 @@ class Comment extends Component {
     });
   }
 
+  deleteComment() {
+    if(window.confirm('Delete Comment?')) {
+      const comment_id = this.props.comment.id
+      APIHelper.deleteComment(comment_id).then(() => {
+        this.props.deleteComment({
+          type: actions.DELETE_COMMENT,
+          comment_id
+        });
+      });
+    };
+  }
 
   render() {
     const {comment} = this.props
@@ -43,11 +56,8 @@ class Comment extends Component {
       <div>
         <h3>{comment.body}</h3>
         <p>{date} | by {comment.author}</p>
-        <ButtonGroup bsSize="xsmall">
-          <Button><Glyphicon glyph="triangle-bottom" onClick={() => {this.downvoteComment()}}/></Button>
-          <div className="btn score-label">{comment.voteScore}</div>
-          <Button><Glyphicon glyph="triangle-top" onClick={() => {this.upvoteComment()}}/></Button>
-        </ButtonGroup>
+        <Score score={comment.voteScore} onUpvote={() => {this.upvoteComment()}} onDownvote={() => {this.downvoteComment()}} />
+        <EditButtons onEdit={() => {this.deleteComment()}} onDelete={() => {this.deleteComment()}}/>
         <hr/>
       </div>
     );
@@ -65,6 +75,7 @@ function mapDispatchToProps (dispatch) {
   return {
     upvoteComment: (comment_id) => dispatch(actions.upvoteComment(comment_id)),
     downvoteComment: (comment_id) => dispatch(actions.downvoteComment(comment_id)),
+    deleteComment: (comment_id) => dispatch(actions.deleteComment(comment_id)),
   }
 }
 

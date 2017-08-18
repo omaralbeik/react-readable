@@ -19,7 +19,6 @@ class PostDetailsPage extends Component {
   fetchPostComments() {
     const {post_id} = this.props.match.params
     APIHelper.fetchPostComments(post_id).then(comments => {
-      console.log(comments);
       this.props.loadComments({
         type: actions.LOAD_COMMENTS,
         comments
