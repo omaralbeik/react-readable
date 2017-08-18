@@ -43,7 +43,7 @@ class App extends Component {
         <div className='container'>
           <Route exact path='/' component={HomePage}/>
           <Route exact path='/posts' render={() => (<PostsPage posts={posts}/>)}/>
-          <Route exact path='/posts/:id' component={PostDetailsPage}/>
+          <Route exact path='/posts/:post_id' component={PostDetailsPage}/>
           <Route exact path='/categories' render={() => (<CategoriesPage categories={categories}/>)}/>
           <Route exact path='/comments' component={HomePage}/>
         </div>

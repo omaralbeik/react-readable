@@ -8,11 +8,12 @@ import * as actions from '../actions';
 
 import APIHelper from '../utils/api-helper';
 import {ButtonGroup, Button, Glyphicon} from 'react-bootstrap';
-import timeago from 'timeago.js';;
+import timeago from 'timeago.js';
 
 class Post extends Component {
   static propTypes = {
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    is_detail: PropTypes.bool,
   }
 
   upvotePost() {
@@ -39,9 +40,17 @@ class Post extends Component {
   render() {
     const {post} = this.props
     const date = timeago().format(post.timestamp);
+    const {is_detail} = this.props;
+
+    var title;
+    if (is_detail) {
+      title = <h1>{post.title}</h1>;
+    } else {
+      title = <Link to={`/posts/${post.id}`} ><h1>{post.title}</h1></Link>;
+    }
     return (
-      <li>
-        <Link to={`/posts/${post.id}`} ><h1>{post.title}</h1></Link>
+      <div>
+        {title}
         <p>{date} | by {post.author} | in <Link to={`/${post.category}`}>{post.category}</Link></p>
         <p>{post.body}</p>
         <ButtonGroup bsSize="xsmall">
@@ -50,7 +59,7 @@ class Post extends Component {
           <Button><Glyphicon glyph="triangle-top" onClick={() => {this.upvotePost()}}/></Button>
         </ButtonGroup>
         <hr/>
-      </li>
+      </div>
     );
   };
 }

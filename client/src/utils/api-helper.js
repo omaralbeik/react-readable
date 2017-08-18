@@ -60,6 +60,20 @@ class APIHelper {
     return this._getObject(this._COMMENT_URL(comment_id));
   }
 
+  /**
+   ** Upvote a comment.
+   */
+  static upvoteComment(comment_id) {
+    return this._postObject(this._COMMENT_URL(comment_id), {'option': 'upVote'});
+  }
+
+  /**
+   ** Downvote a comment.
+   */
+  static downvoteComment(comment_id) {
+    return this._postObject(this._COMMENT_URL(comment_id), {'option': 'downVote'});
+  }
+
   /****************************************************************************/
   /*                                   URLs                                   */
   /****************************************************************************/
