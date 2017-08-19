@@ -28,7 +28,7 @@ class CommentForm extends Component {
 
   getFormValidationState() {
     const {author, body} = this.state;
-    return (author > 0 && body > 0);
+    return (author < 1 || body < 1);
   }
 
   handleChange(event) {
@@ -41,7 +41,7 @@ class CommentForm extends Component {
     const {parent_id} = this.props;
     const {author, body} = this.state;
 
-    if (!this.getFormValidationState()) {
+    if (this.getFormValidationState()) {
       console.error("Author and comment body are required to add a comment");
       return;
     }
@@ -57,7 +57,7 @@ class CommentForm extends Component {
   }
 
   render() {
-    const {comment, onSubmit} = this.props
+    const {comment} = this.props
     return (
       <form onSubmit={this.handleSubmit}>
         <FormGroup controlId="commentAuthor">
@@ -78,7 +78,7 @@ class CommentForm extends Component {
             value={this.state.body}
             onChange={this.handleChange}/>
         </FormGroup>
-        <Button type="submit" disabled={!this.getFormValidationState()}>Submit</Button>
+        <Button type="submit" disabled={this.getFormValidationState()}>Submit</Button>
       </form>
     )
   }
