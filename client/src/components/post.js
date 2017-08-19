@@ -51,11 +51,10 @@ class Post extends Component {
     };
   }
 
-  render() {
+  generateBody() {
     const {post} = this.props
     const date = timeago().format(post.timestamp);
     const {is_detail} = this.props;
-
     var title, editButtons;
     if (is_detail) {
       title = <h1>{post.title}</h1>;
@@ -74,6 +73,10 @@ class Post extends Component {
         <hr/>
       </div>
     );
+  }
+
+  render() {
+    return this.generateBody();
   };
 }
 

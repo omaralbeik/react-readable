@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {withRouter} from 'react-router-dom';
+
+import Modal from 'react-modal';
 
 import {connect} from 'react-redux';
 import * as actions from '../actions';
@@ -8,12 +11,22 @@ import * as actions from '../actions';
 import APIHelper from '../utils/api-helper';
 import timeago from 'timeago.js';
 
-import Score from './score'
-import EditButtons from './edit-buttons'
+import Score from './score';
+import EditButtons from './edit-buttons';
+import CommentForm from './comment-form';
 
 class Comment extends Component {
   static propTypes = {
     comment: PropTypes.object.isRequired,
+  }
+
+  initialState = {
+    isModalOpen: false,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = this.initialState;
   }
 
   upvoteComment() {
@@ -48,15 +61,49 @@ class Comment extends Component {
     };
   }
 
+  editComment() {
+    this.openModel();
+  }
+
+  openModel() {
+    this.setState({isModalOpen: true})
+  }
+
+  closeModal() {
+    this.setState({isModalOpen: false})
+  }
+
   render() {
+    const {isModalOpen} = this.state;
     const {comment} = this.props
     const date = timeago().format(comment.timestamp);
+
+    const modalStyle = {
+      content: {
+        top: '10%',
+        left: '10%',
+        right: '10%',
+        bottom: 'auto',
+      }
+    };
+
     return (
       <div>
         <h3>{comment.body}</h3>
         <p>{date} | by {comment.author}</p>
         <Score score={comment.voteScore} onUpvote={() => {this.upvoteComment()}} onDownvote={() => {this.downvoteComment()}} />
-        <EditButtons onEdit={() => {this.deleteComment()}} onDelete={() => {this.deleteComment()}}/>
+        <EditButtons onEdit={() => {this.editComment()}} onDelete={() => {this.deleteComment()}}/>
+        <Modal
+          style={modalStyle}
+          isOpen={isModalOpen}
+          onAfterOpen={() => {}}
+          onRequestClose={() => {}}
+          closeTimeoutMS={0}
+          shouldCloseOnOverlayClick={true}
+          contentLabel="Edit Comment">
+          <h1>Edit Comment</h1>
+          <CommentForm originalComment={comment} parent_id={comment.parentId} onSubmit={() => {this.closeModal()}} onCancel={() => {this.closeModal()}}/>
+        </Modal>
         <hr/>
       </div>
     );
@@ -78,4 +125,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Comment)
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Comment));

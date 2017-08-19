@@ -7,6 +7,7 @@ export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPVOTE_COMMENT = 'UPVOTE_COMMENT'
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
@@ -42,6 +43,10 @@ export function upvoteComment({comment_id}) {
 
 export function downvoteComment({comment_id}) {
   return {type: DOWNVOTE_COMMENT, comment_id};
+}
+
+export function editComment({comment}) {
+  return {type: EDIT_COMMENT, comment};
 }
 
 export function deleteComment({comment_id}) {

@@ -11,11 +11,11 @@ import {
   ADD_COMMENT,
   UPVOTE_COMMENT,
   DOWNVOTE_COMMENT,
+  EDIT_COMMENT,
   DELETE_COMMENT,
 
   LOAD_CATEGORIES,
 } from '../actions'
-
 
 
 function posts(state = {}, action) {
@@ -101,6 +101,13 @@ function comments(state = {}, action) {
           ...state[comment_id],
           'voteScore': state[comment_id]['voteScore'] - 1
         }
+      };
+
+    // edit a comment
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        [comment.id]: comment
       };
 
     // delete a comment
