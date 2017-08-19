@@ -3,13 +3,13 @@ import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
-import {Route, withRouter} from 'react-router-dom'
+import {Switch, Redirect, Route, withRouter} from 'react-router-dom'
 
 import NavigationBar from './components/navigation-bar'
-import HomePage from './pages/home-page'
 import PostsPage from './pages/posts-page'
 import PostDetailsPage from './pages/post-details-page'
 import CategoriesPage from './pages/categories-page'
+import AboutPage from './pages/about-page'
 
 import {connect} from 'react-redux'
 
@@ -41,10 +41,13 @@ class App extends Component {
       <div className="App">
         <NavigationBar/>
         <div className='container'>
-          <Route exact path='/' component={HomePage}/>
-          <Route exact path='/posts' render={() => (<PostsPage posts={posts}/>)}/>
-          <Route exact path='/posts/:post_id' component={PostDetailsPage}/>
-          <Route exact path='/categories' render={() => (<CategoriesPage categories={categories}/>)}/>
+          <Switch>
+            <Redirect exact from="/" to="/posts" />
+            <Route exact path='/posts' render={() => (<PostsPage posts={posts}/>)}/>
+            <Route exact path='/posts/:post_id' component={PostDetailsPage}/>
+            <Route exact path='/categories' render={() => (<CategoriesPage categories={categories}/>)}/>
+            <Route exact path='/about' component={AboutPage}/>
+          </Switch>
         </div>
       </div>
     );

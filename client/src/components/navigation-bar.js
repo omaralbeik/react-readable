@@ -11,7 +11,7 @@ class NavigationBar extends Component {
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <LinkContainer to="/"><a>Readable!</a></LinkContainer>
+            <LinkContainer to="/posts"><a>Readable!</a></LinkContainer>
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
