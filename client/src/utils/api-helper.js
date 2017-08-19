@@ -28,6 +28,32 @@ class APIHelper {
   }
 
   /**
+   ** Create a new post.
+   */
+  static createPost(author, category, title, body) {
+    return this._postObject(this._POSTS_URL, {
+      id: guid(),
+      timestamp: Date.now(),
+      author: author,
+      category: category,
+      title: title,
+      body: body
+    });
+  }
+
+  /**
+   ** edit a post.
+   */
+  static editPost(post_id, newAuthor, newCategory, newTitle, newBody) {
+    return this._putObject(this._POST_URL(post_id), {
+      author: newAuthor,
+      category: newCategory,
+      title: newTitle,
+      body: newBody
+    });
+  }
+
+  /**
    ** Get a post.
    */
   static fetchPost(post_id) {
@@ -63,15 +89,15 @@ class APIHelper {
   }
 
   /**
-   ** Create a comment.
+   ** Create a new comment.
    */
   static createComment(post_id, author, body) {
     return this._postObject(this._COMMENTS_URL, {
       id: guid(),
       timestamp: Date.now(),
-      body: body,
+      parentId: post_id,
       author: author,
-      parentId: post_id
+      body: body,
     });
   }
 

@@ -11,7 +11,7 @@ class CategoriesPage extends Component {
 
   render() {
     const {categories} = this.props;
-    const categoriesArray = arrayFromObject(categories, 'id');
+    const categoriesArray = arrayFromObject(categories, 'name');
     return (
       <div>
         <ol>

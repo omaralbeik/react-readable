@@ -3,8 +3,10 @@ import {objectFromArray} from '../utils/helpers'
 
 import {
   LOAD_POSTS,
+  ADD_POST,
   UPVOTE_POST,
   DOWNVOTE_POST,
+  EDIT_POST,
   DELETE_POST,
 
   LOAD_COMMENTS,
@@ -19,7 +21,7 @@ import {
 
 
 function posts(state = {}, action) {
-  const {posts, post_id} = action;
+  const {posts, post_id, post} = action;
 
   switch (action.type) {
 
@@ -30,6 +32,14 @@ function posts(state = {}, action) {
         ...state,
         ...objectFromArray(filteredPosts, 'id')
       }
+
+    // add or edit a post
+    case ADD_POST:
+    case EDIT_POST:
+      return {
+        ...state,
+        [post.id]: post
+      };
 
     // upvote a post
     case UPVOTE_POST:
@@ -76,8 +86,9 @@ function comments(state = {}, action) {
         ...objectFromArray(comments, 'id')
       };
 
-    // add a comment
+    // add or edit a comment
     case ADD_COMMENT:
+    case EDIT_COMMENT:
       return {
         ...state,
         [comment.id]: comment
@@ -101,13 +112,6 @@ function comments(state = {}, action) {
           ...state[comment_id],
           'voteScore': state[comment_id]['voteScore'] - 1
         }
-      };
-
-    // edit a comment
-    case EDIT_COMMENT:
-      return {
-        ...state,
-        [comment.id]: comment
       };
 
     // delete a comment

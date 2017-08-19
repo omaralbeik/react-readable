@@ -1,6 +1,8 @@
 export const LOAD_POSTS = 'LOAD_POSTS';
+export const ADD_POST = 'ADD_POST'
 export const UPVOTE_POST = 'UPVOTE_POST'
 export const DOWNVOTE_POST = 'DOWNVOTE_POST'
+export const EDIT_POST = 'EDIT_POST'
 export const DELETE_POST = 'DELETE_POST'
 
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
@@ -16,12 +18,20 @@ export function loadPosts({posts}) {
   return {type: LOAD_POSTS, posts};
 }
 
+export function addPost({post}) {
+  return {type: ADD_POST, post};
+}
+
 export function upvotePost({post_id}) {
   return {type: UPVOTE_POST, post_id};
 }
 
 export function downvotePost({post_id}) {
   return {type: DOWNVOTE_POST, post_id};
+}
+
+export function editPost({post}) {
+  return {type: EDIT_POST, post};
 }
 
 export function deletePost({post_id}) {

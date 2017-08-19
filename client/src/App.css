@@ -23,7 +23,8 @@ ol {
   margin-right: 10px;
 }
 
-.addCommentContainer {
+.addCommentContainer,
+.addPostContainer {
   background-color: #F8F8F8;
   padding: 40px;
   border-radius: 10px;
