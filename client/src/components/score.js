@@ -13,7 +13,7 @@ class Score extends Component {
   render() {
     const {score, onUpvote, onDownvote} = this.props
     return (
-      <ButtonGroup bsSize="xsmall">
+      <ButtonGroup bsSize="xsmall" className="scoreButtons">
         <Button><Glyphicon glyph="triangle-bottom" onClick={() => {onDownvote()}}/></Button>
         <div className="btn score-label">{score}</div>
         <Button><Glyphicon glyph="triangle-top" onClick={() => {onUpvote()}}/></Button>

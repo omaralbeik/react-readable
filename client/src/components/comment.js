@@ -51,7 +51,6 @@ class Comment extends Component {
   render() {
     const {comment} = this.props
     const date = timeago().format(comment.timestamp);
-
     return (
       <div>
         <h3>{comment.body}</h3>

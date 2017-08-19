@@ -8,12 +8,12 @@ import {
   DELETE_POST,
 
   LOAD_COMMENTS,
+  ADD_COMMENT,
   UPVOTE_COMMENT,
   DOWNVOTE_COMMENT,
   DELETE_COMMENT,
 
   LOAD_CATEGORIES,
-  DELETE_CATEGORY,
 } from '../actions'
 
 
@@ -65,15 +65,22 @@ function posts(state = {}, action) {
 
 
 function comments(state = {}, action) {
-  const {comments, comment_id} = action;
+  const {comments, comment_id, comment} = action;
 
   switch (action.type) {
 
-    // load all comments for a post
+    // load all comments
     case LOAD_COMMENTS:
       return {
         ...state,
         ...objectFromArray(comments, 'id')
+      };
+
+    // add a comment
+    case ADD_COMMENT:
+      return {
+        ...state,
+        [comment.id]: comment
       };
 
     // upvote a comment
@@ -111,18 +118,12 @@ function comments(state = {}, action) {
 
 
 function categories(state = {}, action) {
-  const {categories, category_name} = action;
+  const {categories} = action;
 
   switch (action.type) {
     // load categories to store
     case LOAD_CATEGORIES:
       return objectFromArray(categories, 'name');
-
-    // delete a category
-    case DELETE_CATEGORY:
-      var newState = {...state}
-      delete newState[category_name]
-      return newState;
 
     // any other action: return all categories
     default:

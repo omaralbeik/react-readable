@@ -7,8 +7,9 @@ import ReactLoading from 'react-loading';
 
 import {arrayFromObject} from '../utils/helpers';
 import APIHelper from '../utils/api-helper';
-import Post from '../components/post'
-import Comment from '../components/comment'
+import Post from '../components/post';
+import Comment from '../components/comment';
+import CommentForm from '../components/comment-form';
 
 class PostDetailsPage extends Component {
   constructor(props) {
@@ -48,6 +49,10 @@ class PostDetailsPage extends Component {
         <ol>
           {postComments.map((c) => (<Comment key={c.id} comment={c}/>))}
         </ol>
+        <div className="addCommentContainer">
+          <h3>Add Comment</h3>
+          <CommentForm parent_id={post_id}/>
+        </div>
       </div>
     );
   }

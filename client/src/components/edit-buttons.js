@@ -12,7 +12,7 @@ class EditButtons extends Component {
   render() {
     const {onEdit, onDelete} = this.props
     return (
-      <ButtonGroup bsSize="xsmall" className="editButtons">
+      <ButtonGroup bsSize="xsmall">
         <Button bsStyle="primary" onClick={() => {}}>Edit</Button>
         <Button bsStyle="danger" onClick={() => {onDelete()}}>Delete</Button>
       </ButtonGroup>

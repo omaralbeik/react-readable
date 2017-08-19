@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import {Link} from 'react-router-dom'
-
-import PropTypes from 'prop-types';
 
 class Category extends Component {
   static propTypes = {
@@ -12,10 +11,12 @@ class Category extends Component {
   render() {
     const {category} = this.props
     return (
-      <li>
-        <Link to={`/${category.path}`}>{category.name}</Link>
-      </li>
+      <div>
+        <Link to={`/${category.path}`}><h2>{category.name}</h2></Link>
+        <hr/>
+      </div>
     );
   };
 }
-export default Category;
+
+export default Category

@@ -19,6 +19,12 @@ ol {
           box-shadow: none;
 }
 
-.editButtons {
-  margin-left: 10px;
+.scoreButtons {
+  margin-right: 10px;
+}
+
+.addCommentContainer {
+  background-color: #F8F8F8;
+  padding: 40px;
+  border-radius: 10px;
 }

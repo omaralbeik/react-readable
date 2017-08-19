@@ -1,3 +1,5 @@
+import {guid} from './helpers';
+
 class APIHelper {
 
   /****************************************************************************/
@@ -58,6 +60,19 @@ class APIHelper {
    */
   static fetchPostComments(post_id) {
     return this._getObject(this._POST_COMMENTS_URL(post_id));
+  }
+
+  /**
+   ** Create a comment.
+   */
+  static createComment(post_id, author, body) {
+    return this._postObject(this._COMMENTS_URL, {
+      id: guid(),
+      timestamp: Date.now(),
+      body: body,
+      author: author,
+      parentId: post_id
+    });
   }
 
   /**
@@ -149,7 +164,6 @@ class APIHelper {
       if (body) {
         init.body = JSON.stringify(body)
       }
-
       fetch(url, init).then((response) => {
         return response.text().then(text => {
           return text ? JSON.parse(text) : {}

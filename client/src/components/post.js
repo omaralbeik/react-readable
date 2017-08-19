@@ -41,7 +41,7 @@ class Post extends Component {
   deletePost() {
     if(window.confirm('Delete Post?')) {
       const post_id = this.props.post.id
-      APIHelper.deletePost(post_id).then(post => {
+      APIHelper.deletePost(post_id).then(() => {
         this.props.deletePost({
           type: actions.DELETE_POST,
           post_id

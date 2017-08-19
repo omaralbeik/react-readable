@@ -17,7 +17,7 @@ class NavigationBar extends Component {
         <Nav>
           <LinkContainer to="/posts"><NavItem>Posts</NavItem></LinkContainer>
           <LinkContainer to="/categories"><NavItem>Categories</NavItem></LinkContainer>
-          <LinkContainer to="/comments"><NavItem>Comments</NavItem></LinkContainer>
+          <LinkContainer to="/about"><NavItem>About</NavItem></LinkContainer>
         </Nav>
       </Navbar>
     );
