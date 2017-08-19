@@ -12,7 +12,11 @@ Use an Authorization header to work with your own data:
 
 `fetch(url, { headers: { 'Authorization': 'whatever-you-want' }})`
 
+
+---
+
 The following endpoints are available:  
+
 
 #### `GET /categories`  
   **USAGE:**   
@@ -45,13 +49,13 @@ The following endpoints are available:
     author - String  
     category: Any of the categories listed in categories.js. Feel free to extend this list as you desire.  
 
-    ---
+---
 
 #### `GET /posts/:id`  
   **USAGE:**  
     Get the details of a single post  
 
-    ---
+---
 
 #### `POST /posts/:id`  
   **USAGE:**  
@@ -60,7 +64,7 @@ The following endpoints are available:
   **PARAMS:**  
     option - String: Either "upVote" or "downVote"  
 
-    ---
+---
 
 #### `PUT /posts/:id`  
   **USAGE:**  
@@ -70,20 +74,20 @@ The following endpoints are available:
     title - String  
     body - String  
 
-    ---
+---
 
 #### `DELETE /posts/:id`  
   **USAGE:**  
     Sets the deleted flag for a post to 'true'.   
     Sets the parentDeleted flag for all child comments to 'true'.  
 
-    ---
+---
 
 #### `GET /posts/:id/comments`  
   **USAGE:**  
     Get all the comments for a single post  
 
-    ---
+---
 
 #### `POST /comments`  
   **USAGE:**  
@@ -96,19 +100,19 @@ The following endpoints are available:
     author: String  
     parentId: Should match a post id in the database.  
 
-    ---
+---
 
 #### `GET /comments/:id`  
   **USAGE:**  
     Get the details for a single comment  
 
-    ---
+---
 
 #### `POST /comments/:id`  
   **USAGE:**  
     Used for voting on a comment.  
 
-    ---
+---
 
 #### `PUT /comments/:id`  
   **USAGE:**  
@@ -118,7 +122,7 @@ The following endpoints are available:
     timestamp: timestamp. Get this however you want.  
     body: String  
 
-    ---
+---
 
 #### `DELETE /comments/:id`  
   **USAGE:**  
