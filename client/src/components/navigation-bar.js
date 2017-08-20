@@ -17,7 +17,7 @@ class NavigationBar extends Component {
         <Navbar.Collapse>
           <Nav>
             <LinkContainer to="/"><NavItem>Posts</NavItem></LinkContainer>
-            <NavItem href="https://github.com/omaralbeik/Readable" target="_blank">Github Repo</NavItem>
+            <NavItem href="https://github.com/omaralbeik/Readable">Github Repo</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

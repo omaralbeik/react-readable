@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 
 import {withRouter} from 'react-router-dom';
 
-import {arrayFromObject} from '../utils/helpers';
+import {connect} from 'react-redux';
+
+import {getSortedPostsArray} from '../utils/helpers';
 import Post from '../components/post';
 import PostForm from '../forms/post-form';
+import SortButtons from '../components/sort-buttons';
 
 class CategoryPage extends Component {
   static propTypes = {
@@ -27,14 +30,22 @@ class CategoryPage extends Component {
         </div>
       );
     } else {
-      return <h1>All <strong>{category_name.toUpperCase()}</strong> Posts</h1>
+      return (
+        <div>
+          <h1>All <strong>{category_name.toUpperCase()}</strong> Posts</h1>
+          <SortButtons/>
+        </div>
+      )
+
     }
   }
-  
+
   render() {
     const {posts} = this.props
     const {category_name} = this.props.match.params
-    const postsArray = arrayFromObject(posts, 'id');
+
+    const {sorting} = this.props.prefrences;
+    const postsArray = getSortedPostsArray(posts, sorting);
     const categoryPosts = postsArray.filter(p => (p.category === category_name));
 
     return (
@@ -53,4 +64,8 @@ class CategoryPage extends Component {
   }
 }
 
-export default withRouter(CategoryPage)
+function mapStateToProps({posts, categories, prefrences}) {
+  return {posts, categories, prefrences}
+}
+
+export default withRouter(connect(mapStateToProps)(CategoryPage));

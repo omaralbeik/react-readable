@@ -101,7 +101,7 @@ class Post extends Component {
 
   generateTitle(post, is_detail) {
     if (is_detail) {
-      return <h2>{post.title}</h2>;
+      return <h1>{post.title}</h1>;
     } else {
       return <Link to={`/${post.category}/${post.id}`} ><h2>{post.title}</h2></Link>;
     }

@@ -35,14 +35,13 @@ class App extends Component {
   }
 
   render() {
-    const {posts, categories} = this.props
     return (
       <div className="App">
         <NavigationBar/>
         <div className='container'>
           <Switch>
-            <Route exact path='/' render={() => (<PostsPage posts={posts}/>)}/>
-            <Route exact path='/:category_name' render={() => (<CategoryPage posts={posts} categories={categories}/>)}/>
+            <Route exact path='/' component={PostsPage}/>
+            <Route exact path='/:category_name' component={CategoryPage}/>
             <Route exact path='/:category_name/:post_id' component={PostDetailsPage}/>
           </Switch>
         </div>
@@ -51,14 +50,12 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({posts, categories}) {
-  return {posts, categories}
-}
+function mapStateToProps() {}
 
 function mapDispatchToProps(dispatch) {
   return {
     loadPosts: (posts) => dispatch(actions.loadPosts(posts)),
-    loadCategories: (categories) => dispatch(actions.loadCategories(categories)),
+    loadCategories: (categories) => dispatch(actions.loadCategories(categories))
   }
 }
 

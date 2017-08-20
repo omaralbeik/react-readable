@@ -1,21 +1,22 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 
-import {arrayFromObject} from '../utils/helpers';
+import {connect} from 'react-redux';
+
+import {getSortedPostsArray} from '../utils/helpers';
 import Post from '../components/post';
 import PostForm from '../forms/post-form';
+import SortButtons from '../components/sort-buttons';
 
 class PostsPage extends Component {
-  static propTypes = {
-    posts: PropTypes.object.isRequired
-  }
 
   render() {
     const {posts} = this.props
-    const postsArray = arrayFromObject(posts, 'id');
+    const {sorting} = this.props.prefrences;
+    const postsArray = getSortedPostsArray(posts, sorting);
     return (
       <div>
         <h1>All Posts</h1>
+        <SortButtons/>
         <ol>
           {postsArray.map((p) => (<Post key={p.id} post={p}/>))}
         </ol>
@@ -28,4 +29,8 @@ class PostsPage extends Component {
   }
 }
 
-export default PostsPage
+function mapStateToProps({posts, prefrences}) {
+  return {posts, prefrences}
+}
+
+export default connect(mapStateToProps)(PostsPage);

@@ -14,6 +14,8 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 
+export const SET_SORTING_PREFERENCE_BY_DATE = 'SET_SORTING_PREFERENCE_BY_DATE';
+export const SET_SORTING_PREFERENCE_BY_SCORE = 'SET_SORTING_PREFERENCE_BY_SCORE';
 
 /****************************************************************************/
 /*                          Posts action creators                           */
@@ -79,4 +81,17 @@ export function deleteComment({comment_id}) {
 
 export function loadCategories({categories}) {
   return {type: LOAD_CATEGORIES, categories};
+}
+
+
+/****************************************************************************/
+/*                       Prefrences action creators                         */
+/****************************************************************************/
+
+export function setSortingPreferenceByDate() {
+  return {type: SET_SORTING_PREFERENCE_BY_DATE};
+}
+
+export function setSortingPreferenceByScore() {
+  return {type: SET_SORTING_PREFERENCE_BY_SCORE};
 }
