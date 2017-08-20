@@ -9,7 +9,7 @@ import {arrayFromObject} from '../utils/helpers';
 import APIHelper from '../utils/api-helper';
 import Post from '../components/post';
 import Comment from '../components/comment';
-import CommentForm from '../components/comment-form';
+import CommentForm from '../forms/comment-form';
 
 class PostDetailsPage extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class PostDetailsPage extends Component {
     });
   }
 
-  generateBody() {
+  render() {
     const {post_id} = this.props.match.params
     const {posts, comments} = this.props
     const post = posts[post_id];
@@ -48,10 +48,6 @@ class PostDetailsPage extends Component {
       );
     }
     return <ReactLoading type="bubbles" color="#444"/>;
-  }
-
-  render() {
-    return this.generateBody();
   }
 }
 

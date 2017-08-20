@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import {objectFromArray} from '../utils/helpers'
 
 import {
+  // posts actions
   LOAD_POSTS,
   ADD_POST,
   UPVOTE_POST,
@@ -9,6 +10,7 @@ import {
   EDIT_POST,
   DELETE_POST,
 
+  // comments actions
   LOAD_COMMENTS,
   ADD_COMMENT,
   UPVOTE_COMMENT,
@@ -16,10 +18,12 @@ import {
   EDIT_COMMENT,
   DELETE_COMMENT,
 
+  // categories actions
   LOAD_CATEGORIES,
 } from '../actions'
 
 
+// Posts reducers
 function posts(state = {}, action) {
   const {posts, post_id, post} = action;
 
@@ -74,6 +78,7 @@ function posts(state = {}, action) {
 }
 
 
+// Comments reducers
 function comments(state = {}, action) {
   const {comments, comment_id, comment} = action;
 
@@ -128,6 +133,7 @@ function comments(state = {}, action) {
 }
 
 
+// Categories reducers
 function categories(state = {}, action) {
   const {categories} = action;
 
@@ -142,4 +148,5 @@ function categories(state = {}, action) {
   }
 }
 
+// export all above reducers combined
 export default combineReducers({posts, comments, categories});

@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 
 import {Link, withRouter} from 'react-router-dom';
 
-import Modal from 'react-modal';
-
 import {connect} from 'react-redux';
 import * as actions from '../actions';
 
-import APIHelper from '../utils/api-helper';
 import timeago from 'timeago.js';
+import Modal from 'react-modal';
 
+import APIHelper from '../utils/api-helper';
 import Score from './score'
 import EditButtons from './edit-buttons'
-import PostForm from './post-form';
+import PostForm from '../forms/post-form';
 
 class Post extends Component {
   static propTypes = {
@@ -58,7 +57,7 @@ class Post extends Component {
           type: actions.DELETE_POST,
           post_id
         });
-        this.props.history.push('/posts');
+        this.props.history.push('/');
       });
     };
   }
@@ -75,12 +74,8 @@ class Post extends Component {
     this.setState({isModalOpen: false})
   }
 
-  generateBody() {
+  generateModal(post) {
     const {isModalOpen} = this.state;
-    const {post} = this.props
-    const date = timeago().format(post.timestamp);
-    const {is_detail} = this.props;
-
     const modalStyle = {
       content: {
         top: '10%',
@@ -89,48 +84,59 @@ class Post extends Component {
         bottom: 'auto',
       }
     };
-
-    var title, editButtons;
-    if (is_detail) {
-      title = <h1>{post.title}</h1>;
-      editButtons = <EditButtons onEdit={() => {this.editPost()}} onDelete={() => {this.deletePost()}}/>;
-    } else {
-      title = <Link to={`/posts/${post.id}`} ><h1>{post.title}</h1></Link>;
-      editButtons = null;
-    }
     return (
-      <div>
-        {title}
-        <p>{date} | by {post.author} | in <Link to={`/${post.category}`}>{post.category}</Link></p>
-        <p>{post.body}</p>
-        <Score score={post.voteScore} onUpvote={() => {this.upvotePost()}} onDownvote={() => {this.downvotePost()}} />
-        {editButtons}
-        <Modal
-          style={modalStyle}
-          isOpen={isModalOpen}
-          onAfterOpen={() => {}}
-          onRequestClose={() => {}}
-          closeTimeoutMS={0}
-          shouldCloseOnOverlayClick={true}
-          contentLabel="Edit Post">
-          <h1>Edit Post</h1>
-          <PostForm originalPost={post} onSubmit={() => {this.closeModal()}} onCancel={() => {this.closeModal()}}/>
-        </Modal>
-        <hr/>
-      </div>
-    );
+      <Modal
+        style={modalStyle}
+        isOpen={isModalOpen}
+        onAfterOpen={() => {}}
+        onRequestClose={() => {}}
+        closeTimeoutMS={0}
+        shouldCloseOnOverlayClick={true}
+        contentLabel="Edit Post">
+        <h2>Edit Post</h2>
+        <PostForm originalPost={post} onSubmit={() => {this.closeModal()}} onCancel={() => {this.closeModal()}}/>
+      </Modal>
+    )
+  }
+
+  generateTitle(post, is_detail) {
+    if (is_detail) {
+      return <h2>{post.title}</h2>;
+    } else {
+      return <Link to={`/${post.category}/${post.id}`} ><h2>{post.title}</h2></Link>;
+    }
+  }
+
+  generateEditButtons(is_detail) {
+    if (is_detail) {
+      return <EditButtons onEdit={() => {this.editPost()}} onDelete={() => {this.deletePost()}}/>;
+    } else {
+      return null;
+    }
   }
 
   render() {
-    return this.generateBody();
+    const {post} = this.props
+    const date = timeago().format(post.timestamp);
+    const {is_detail} = this.props;
+
+    return (
+      <div>
+        {this.generateTitle(post, is_detail)}
+        <p>{date} | by {post.author} | in <Link to={`/${post.category}`}>{post.category}</Link></p>
+        <p>{post.body}</p>
+        <Score score={post.voteScore} onUpvote={() => {this.upvotePost()}} onDownvote={() => {this.downvotePost()}} />
+        {this.generateEditButtons(is_detail)}
+        {this.generateModal(post)}
+        <hr/>
+      </div>
+    );
   };
 }
 
 
 function mapStateToProps ({ posts }) {
-  return {
-    posts,
-  }
+  return {posts}
 }
 
 function mapDispatchToProps (dispatch) {
@@ -141,7 +147,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Post))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Post))

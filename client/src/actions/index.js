@@ -14,6 +14,11 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 
+
+/****************************************************************************/
+/*                          Posts action creators                           */
+/****************************************************************************/
+
 export function loadPosts({posts}) {
   return {type: LOAD_POSTS, posts};
 }
@@ -38,10 +43,14 @@ export function deletePost({post_id}) {
   return {type: DELETE_POST, post_id};
 }
 
-
 export function loadComments({comments}) {
   return {type: LOAD_COMMENTS, comments};
 }
+
+
+/****************************************************************************/
+/*                        Comments action creators                          */
+/****************************************************************************/
 
 export function addComment({comment}) {
   return {type: ADD_COMMENT, comment};
@@ -63,6 +72,10 @@ export function deleteComment({comment_id}) {
   return {type: DELETE_COMMENT, comment_id};
 }
 
+
+/****************************************************************************/
+/*                       Categories action creators                         */
+/****************************************************************************/
 
 export function loadCategories({categories}) {
   return {type: LOAD_CATEGORIES, categories};

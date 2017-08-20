@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 
 import {withRouter} from 'react-router-dom';
 
-import Modal from 'react-modal';
-
 import {connect} from 'react-redux';
 import * as actions from '../actions';
 
-import APIHelper from '../utils/api-helper';
 import timeago from 'timeago.js';
+import Modal from 'react-modal';
 
+import APIHelper from '../utils/api-helper';
 import Score from './score';
 import EditButtons from './edit-buttons';
-import CommentForm from './comment-form';
+import CommentForm from '../forms/comment-form';
 
 class Comment extends Component {
   static propTypes = {
@@ -73,11 +72,8 @@ class Comment extends Component {
     this.setState({isModalOpen: false})
   }
 
-  render() {
+  generateModal(comment) {
     const {isModalOpen} = this.state;
-    const {comment} = this.props
-    const date = timeago().format(comment.timestamp);
-
     const modalStyle = {
       content: {
         top: '10%',
@@ -88,22 +84,31 @@ class Comment extends Component {
     };
 
     return (
+      <Modal
+        style={modalStyle}
+        isOpen={isModalOpen}
+        onAfterOpen={() => {}}
+        onRequestClose={() => {}}
+        closeTimeoutMS={0}
+        shouldCloseOnOverlayClick={true}
+        contentLabel="Edit Comment">
+        <h1>Edit Comment</h1>
+        <CommentForm originalComment={comment} parent_id={comment.parentId} onSubmit={() => {this.closeModal()}} onCancel={() => {this.closeModal()}}/>
+      </Modal>
+    )
+  }
+
+  render() {
+    const {comment} = this.props
+    const date = timeago().format(comment.timestamp);
+
+    return (
       <div>
         <h3>{comment.body}</h3>
         <p>{date} | by {comment.author}</p>
         <Score score={comment.voteScore} onUpvote={() => {this.upvoteComment()}} onDownvote={() => {this.downvoteComment()}} />
         <EditButtons onEdit={() => {this.editComment()}} onDelete={() => {this.deleteComment()}}/>
-        <Modal
-          style={modalStyle}
-          isOpen={isModalOpen}
-          onAfterOpen={() => {}}
-          onRequestClose={() => {}}
-          closeTimeoutMS={0}
-          shouldCloseOnOverlayClick={true}
-          contentLabel="Edit Comment">
-          <h1>Edit Comment</h1>
-          <CommentForm originalComment={comment} parent_id={comment.parentId} onSubmit={() => {this.closeModal()}} onCancel={() => {this.closeModal()}}/>
-        </Modal>
+        {this.generateModal(comment)}
         <hr/>
       </div>
     );
@@ -112,9 +117,7 @@ class Comment extends Component {
 
 
 function mapStateToProps ({ comments }) {
-  return {
-    comments,
-  }
+  return {comments};
 }
 
 function mapDispatchToProps (dispatch) {
@@ -125,7 +128,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Comment));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Comment));

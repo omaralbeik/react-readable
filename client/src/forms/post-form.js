@@ -12,6 +12,7 @@ import {arrayFromObject} from '../utils/helpers';
 class PostForm extends Component {
   static propTypes = {
     originalPost: PropTypes.object,
+    defaultCategory: PropTypes.string,
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
   }
@@ -25,19 +26,24 @@ class PostForm extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = this.initialState;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    const {originalPost} = this.props;
+    const {originalPost, defaultCategory} = this.props;
     if (originalPost) {
       this.setState({
         author: originalPost.author,
         category: originalPost.category,
         title: originalPost.title,
         body: originalPost.body});
+    } else {
+      if (defaultCategory) {
+        this.setState({category: defaultCategory})
+      }
     }
   }
 
@@ -112,27 +118,28 @@ class PostForm extends Component {
     });
   }
 
-  // generate render body
-  generateBody() {
-    const {author, category, title, body} = this.state
-    const {originalPost, categories} = this.props;
-    const categoriesArray = arrayFromObject(categories, 'name');
-    const buttonText = originalPost
-      ? "Save"
-      : "Add"
-    var button;
+  generateFormButtons() {
+    const {originalPost} = this.props;
+    const buttonText = originalPost ? "Save" : "Add";
+
     if (originalPost) {
-      button = (
+      return (
         <ButtonGroup>
           <Button bsStyle="primary" type="submit" disabled={this.getFormValidationState()}>{buttonText}</Button>
           <Button onClick={() => {
             this.handleCancel()
           }}>Cancel</Button>
         </ButtonGroup>
-      )
+      );
     } else {
-      button = <Button bsStyle="primary" type="submit" disabled={this.getFormValidationState()}>{buttonText}</Button>
+      return <Button bsStyle="primary" type="submit" disabled={this.getFormValidationState()}>{buttonText}</Button>;
     }
+  }
+
+  render() {
+    const {author, category, title, body} = this.state
+    const {categories} = this.props;
+    const categoriesArray = arrayFromObject(categories, 'name');
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -155,13 +162,9 @@ class PostForm extends Component {
           <ControlLabel>Body</ControlLabel>
           <FormControl componentClass="textarea" name="body" placeholder="Body" value={body} onChange={this.handleChange}/>
         </FormGroup>
-        {button}
+        {this.generateFormButtons()}
       </form>
     )
-  }
-
-  render() {
-    return this.generateBody();
   }
 }
 

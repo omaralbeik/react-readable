@@ -1,20 +1,19 @@
 import React, {Component} from 'react';
 
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import {Switch, Redirect, Route, withRouter} from 'react-router-dom'
+import {Switch, Route, withRouter} from 'react-router-dom';
 
-import NavigationBar from './components/navigation-bar'
-import PostsPage from './pages/posts-page'
-import PostDetailsPage from './pages/post-details-page'
-import CategoriesPage from './pages/categories-page'
-import AboutPage from './pages/about-page'
+import NavigationBar from './components/navigation-bar';
+import PostsPage from './pages/posts-page';
+import CategoryPage from './pages/category-page';
+import PostDetailsPage from './pages/post-details-page';
 
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 
-import APIHelper from './utils/api-helper'
-import * as actions from './actions'
+import APIHelper from './utils/api-helper';
+import * as actions from './actions';
 
 class App extends Component {
   constructor(props) {
@@ -42,11 +41,9 @@ class App extends Component {
         <NavigationBar/>
         <div className='container'>
           <Switch>
-            <Redirect exact from="/" to="/posts" />
-            <Route exact path='/posts' render={() => (<PostsPage posts={posts}/>)}/>
-            <Route exact path='/posts/:post_id' component={PostDetailsPage}/>
-            <Route exact path='/categories' render={() => (<CategoriesPage categories={categories}/>)}/>
-            <Route exact path='/about' component={AboutPage}/>
+            <Route exact path='/' render={() => (<PostsPage posts={posts}/>)}/>
+            <Route exact path='/:category_name' render={() => (<CategoryPage posts={posts} categories={categories}/>)}/>
+            <Route exact path='/:category_name/:post_id' component={PostDetailsPage}/>
           </Switch>
         </div>
       </div>

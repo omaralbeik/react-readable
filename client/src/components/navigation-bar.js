@@ -6,19 +6,20 @@ import {LinkContainer} from 'react-router-bootstrap'
 class NavigationBar extends Component {
 
   render() {
-
     return (
-      <Navbar>
+      <Navbar collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <LinkContainer to="/posts"><a>Readable!</a></LinkContainer>
+            <LinkContainer to="/"><a>Readable!</a></LinkContainer>
           </Navbar.Brand>
+          <Navbar.Toggle />
         </Navbar.Header>
-        <Nav>
-          <LinkContainer to="/posts"><NavItem>Posts</NavItem></LinkContainer>
-          <LinkContainer to="/categories"><NavItem>Categories</NavItem></LinkContainer>
-          <LinkContainer to="/about"><NavItem>About</NavItem></LinkContainer>
-        </Nav>
+        <Navbar.Collapse>
+          <Nav>
+            <LinkContainer to="/"><NavItem>Posts</NavItem></LinkContainer>
+            <NavItem href="https://github.com/omaralbeik/Readable" target="_blank">Github Repo</NavItem>
+          </Nav>
+        </Navbar.Collapse>
       </Navbar>
     );
   };

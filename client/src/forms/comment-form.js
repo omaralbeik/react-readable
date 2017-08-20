@@ -107,22 +107,23 @@ class CommentForm extends Component {
     });
   }
 
-  // generate render body
-  generateBody() {
-    const {author, body} = this.state
+  generateFormButtons() {
     const {originalComment} = this.props;
     const buttonText = originalComment ? "Save" : "Add"
-    var button;
     if (originalComment) {
-      button = (
+      return (
         <ButtonGroup>
           <Button bsStyle="primary" type="submit" disabled={this.getFormValidationState()}>{buttonText}</Button>
           <Button onClick={() => {this.handleCancel()}}>Cancel</Button>
         </ButtonGroup>
-      )
+      );
     } else {
-      button = <Button bsStyle="primary" type="submit" disabled={this.getFormValidationState()}>{buttonText}</Button>
+      return <Button bsStyle="primary" type="submit" disabled={this.getFormValidationState()}>{buttonText}</Button>;
     }
+  }
+
+  render() {
+    const {author, body} = this.state
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -144,20 +145,14 @@ class CommentForm extends Component {
             value={body}
             onChange={this.handleChange}/>
         </FormGroup>
-        {button}
+        {this.generateFormButtons()}
       </form>
     )
-  }
-
-  render() {
-    return this.generateBody();
   }
 }
 
 function mapStateToProps ({ comment }) {
-  return {
-    comment,
-  }
+  return {comment}
 }
 
 function mapDispatchToProps (dispatch) {
