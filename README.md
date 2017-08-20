@@ -11,10 +11,10 @@ This is the second project for [Udacity](https://www.udacity.com)'s [React Devel
 
 This app requires the following two local servers to be running at the same time
 
-1. API local server
+### 1. API local server
 _Server directory_: `/server`
 
-2. React development server
+### 2. React development server
 _Client directory_: `/client`
 
 
